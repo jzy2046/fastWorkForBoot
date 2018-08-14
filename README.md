@@ -1,5 +1,29 @@
 **Spring_boot快速工作框架(fastWork)** 
 
+注意
+ (在resources新建application.yml,填写自己的数据库连接地址):
+    ``` #默认使用配置
+      spring:
+        profiles:
+          active: dev
+      
+      #公共配置与profiles选择无关
+      mybatis:
+        typeAliasesPackage: com.example.demo.model
+        mapperLocations: classpath:mapper/*.xml
+      
+      
+      ---
+      
+      #开发配置
+      spring:
+        profiles: dev
+      
+        datasource:
+          url: jdbc:mysql://********:3306/test
+          username: *****
+          password: ****
+          driver-class-name: com.mysql.jdbc.Driv
 JDK版本:
 
       1.8
