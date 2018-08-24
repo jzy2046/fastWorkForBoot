@@ -22,7 +22,7 @@ import java.util.List;
 public class UserController {
     @Resource
     private UserService userService;
-
+    /* 这个方法是展示用户的 */
     @RequestMapping("/showUser")
     @ResponseBody
     public User toIndex(HttpServletRequest request, Model model){
