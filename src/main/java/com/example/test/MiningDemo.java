@@ -7,20 +7,20 @@ import java.util.Scanner;
  * @author hzy13811
  */
 public class MiningDemo {
-    private static final Double dayMoney[]={0.617,0.617,0.917};
-    private static final Double nightMoney[]={0.307,0.337,0.487};
-    private static final Integer oneGrade=260;
-    private static final Integer twoGrade=400;
-    private static final Double allTime=24.0;
-    private static final Double dayTime=14.0;
-    private static final Double nightTime=8.0;
+    private static final Double[] DAY_MONEY = {0.617, 0.667, 0.917};
+    private static final Double[] NIGHT_MONEY = {0.307, 0.337, 0.487};
+    private static final Integer ONE_GRADE =260;
+    private static final Integer TWO_GRADE =400;
+    private static final Double ALL_TIME =24.0;
+    private static final Double DAY_TIME =14.0;
+    private static final Double NIGHT_TIME =8.0;
     public static void main(String[] args) {
         Scanner scanner=new Scanner(System.in);
         System.out.println("输入用电量:\n");
         Double nowElectricity =scanner.nextDouble();
         System.out.println("输入用电方式:1.一直半天用 2.一直晚上用 3.全天用\n");
         Integer option =scanner.nextInt();
-        Double res = selectAllDayRun(dayMoney, nightMoney, nowElectricity ,option);
+        Double res = selectAllDayRun(DAY_MONEY, NIGHT_MONEY, nowElectricity ,option);
         if (res>0){
             System.out.println("电费应付:"+res+"元");
         }else {
@@ -35,35 +35,35 @@ public class MiningDemo {
         }
         switch (option){
             case 1:
-                if (nowElectricity<=oneGrade){
-                    res = dayMoney[0]*nowElectricity;
-                }else if (nowElectricity>oneGrade&&nowElectricity<=twoGrade){
-                    res=(dayMoney[0]*oneGrade+dayMoney[1]*(twoGrade-oneGrade));
-                }else {
-                    res=(dayMoney[0]*oneGrade+dayMoney[1]*(twoGrade-oneGrade))+dayMoney[2]*(nowElectricity-twoGrade);
-                }
+                res = getaRes(dayMoney, nowElectricity);
                 break;
             case 2:
-                if (nowElectricity<=oneGrade){
-                    res = nightMoney[0]*nowElectricity;
-                }else if (nowElectricity>oneGrade&&nowElectricity<=twoGrade){
-                    res=(nightMoney[0]*oneGrade+nightMoney[1]*(twoGrade-oneGrade));
-                }else {
-                    res=(nightMoney[0]*oneGrade+nightMoney[1]*(twoGrade-oneGrade))+nightMoney[2]*(nowElectricity-twoGrade);
-                }
+                res = getaRes(nightMoney, nowElectricity);
                 break;
             case 3:
-                if (nowElectricity<=oneGrade){
-                    res = (nightMoney[0]*nowElectricity)*(nightTime/allTime)+(dayMoney[0]*nowElectricity)*(dayTime/allTime);
-                }else if (nowElectricity>oneGrade&&nowElectricity<=twoGrade){
-                    res=((nightMoney[0]*oneGrade+nightMoney[1]*(twoGrade-oneGrade)))*(nightTime/allTime)+((dayMoney[0]*oneGrade+dayMoney[1]*(twoGrade-oneGrade)))*(dayTime/allTime);
+                if (nowElectricity<=ONE_GRADE ){
+                    res = (nightMoney[0]*nowElectricity)*(NIGHT_TIME / ALL_TIME)+(dayMoney[0]*nowElectricity)*(DAY_TIME / ALL_TIME);
+                }else if (nowElectricity>ONE_GRADE &&nowElectricity<= TWO_GRADE){
+                    res=((nightMoney[0]*ONE_GRADE +nightMoney[1]*(TWO_GRADE -ONE_GRADE )))*(NIGHT_TIME / ALL_TIME)+((dayMoney[0]*ONE_GRADE +dayMoney[1]*(TWO_GRADE -ONE_GRADE )))*(DAY_TIME / ALL_TIME);
                 }else {
-                    res=((nightMoney[0]*oneGrade+nightMoney[1]*(twoGrade-oneGrade))+nightMoney[2]*(nowElectricity-twoGrade))*(nightTime/allTime)+((dayMoney[0]*oneGrade+dayMoney[1]*(twoGrade-oneGrade))+dayMoney[2]*(nowElectricity-twoGrade))*(dayTime/allTime);
+                    res=((nightMoney[0]*ONE_GRADE +nightMoney[1]*(TWO_GRADE -ONE_GRADE ))+nightMoney[2]*(nowElectricity- TWO_GRADE))*(NIGHT_TIME / ALL_TIME)+((dayMoney[0]*ONE_GRADE +dayMoney[1]*(TWO_GRADE -ONE_GRADE ))+dayMoney[2]*(nowElectricity- TWO_GRADE))*(DAY_TIME / ALL_TIME);
                 }
                 break;
             default:
                 res = 0.0;
                 break;
+        }
+        return res;
+    }
+
+    private static Double getaRes(Double[] dayMoney, Double nowElectricity) {
+        Double res;
+        if (nowElectricity<=ONE_GRADE ){
+            res = dayMoney[0]*nowElectricity;
+        }else if (nowElectricity>ONE_GRADE &&nowElectricity<= TWO_GRADE){
+            res=(dayMoney[0]*ONE_GRADE +dayMoney[1]*(TWO_GRADE -ONE_GRADE ));
+        }else {
+            res=(dayMoney[0]*ONE_GRADE +dayMoney[1]*(TWO_GRADE -ONE_GRADE ))+dayMoney[2]*(nowElectricity- TWO_GRADE);
         }
         return res;
     }
