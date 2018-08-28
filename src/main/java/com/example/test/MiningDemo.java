@@ -22,7 +22,7 @@ public class MiningDemo {
         Integer option =scanner.nextInt();
         Double res = selectAllDayRun(DAY_MONEY, NIGHT_MONEY, nowElectricity ,option);
         if (res>0){
-            System.out.println("电费应付:"+res+"元");
+            System.out.println("电费应付:"+res+"元,平均每度费用:"+res/nowElectricity+"元");
         }else {
             System.out.println("输入错误!");
         }
@@ -35,10 +35,10 @@ public class MiningDemo {
         }
         switch (option){
             case 1:
-                res = getaRes(dayMoney, nowElectricity);
+                res = getRes(dayMoney, nowElectricity);
                 break;
             case 2:
-                res = getaRes(nightMoney, nowElectricity);
+                res = getRes(nightMoney, nowElectricity);
                 break;
             case 3:
                 if (nowElectricity<=ONE_GRADE ){
@@ -56,7 +56,7 @@ public class MiningDemo {
         return res;
     }
 
-    private static Double getaRes(Double[] dayMoney, Double nowElectricity) {
+    private static Double getRes(Double[] dayMoney, Double nowElectricity) {
         Double res;
         if (nowElectricity<=ONE_GRADE ){
             res = dayMoney[0]*nowElectricity;
